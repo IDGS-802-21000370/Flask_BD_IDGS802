@@ -3,13 +3,13 @@ import forms
 from flask_wtf.csrf import CSRFProtect
 from config import DevelopmentConfig
 from flask import flash
-from models import db
+from models import Alumnos, db
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 csrf=CSRFProtect()
 
 @app.route("/")
-def index():
+def principal():
     return render_template("layout2.html")
 
 
@@ -29,6 +29,25 @@ def alumnos():
         print("correo: {}".format(correo))
         print("apaterno: {}".format(apaterno))
     return render_template("alumnos.html", form=alum_form, nom=nom, apaterno=apaterno,correo=correo)
+
+@app.route("/index", methods=["GET", "POST"])
+def index():
+    alum_form=forms.UserForm2(request.form)
+    if request.method=="POST":
+        alum=Alumnos(nombre=alum_form.nombre.data, 
+                     apaterno=alum_form.apaterno.data,
+                     email=alum_form.email.data)
+        #insert into alumnos values()
+        db.session.add(alum)
+        db.session.commit()
+    return render_template("index.html", form=alum_form)
+
+@app.route("/ABC_Completo", methods=["GET", "POST"])
+def ABCompleto():
+    alum_form=forms.UserForm2(request.form)
+    alumno=Alumnos.query.all()
+    
+    return render_template("ABC_Completo.html", alumno=alumno)
 
 @app.errorhandler(404)
 def page_not_found(e):
