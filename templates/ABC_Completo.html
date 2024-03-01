@@ -22,8 +22,8 @@
                     <td>{{alum.nombre}}</td>
                     <td>{{alum.apaterno}}</td>
                     <td>{{alum.email}}</td>
-                    <td><a href="eliminar.html?id={{alum.id}}" class="btn btn-danger">Eliminar</a></td>
-                    <td><a href="modificar.html?id={{alum.id}}" class="btn btn-warning">Modificar</a></td>
+                    <td><a href="/eliminar?id={{alum.id}}" class="btn btn-danger">Eliminar</a></td>
+                    <td><a href="/modificar?id={{alum.id}}" class="btn btn-warning">Modificar</a></td>
                 </tr>
                 {%endfor%}
             </tbody>
